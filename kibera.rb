@@ -66,7 +66,7 @@ module Kibela
   end
 
   class Attachment
-    attr_accessor :name, :path
+    attr_accessor :name, :path, :esa_path
 
     def initialize(file)
       raise ArgumentError unless file.is_a?(File)
