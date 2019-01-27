@@ -45,6 +45,21 @@ module Kibela
       end
     end
 
+    def esafy(attachment_list)
+      replace_attachment_names(attachment_list)
+      @category = 'blog' if blog?
+      {
+        post: {
+          name: @name,
+          body_md: @body,
+          tags: [],
+          category: @category,
+          wip: wip?,
+          message: 'migrate from kibela',
+        }
+      }
+    end
+
     def esa_number
       @response.body['number']
     end
