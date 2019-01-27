@@ -7,7 +7,7 @@ module Kibela
   ATTACHMENT_PATTERN = %r[^(\.\./)*attachments/(?<attachment_name>\d+\.png)]
 
   class Note
-    attr_accessor :name, :category, :body, :frontmatter
+    attr_accessor :name, :category, :body, :frontmatter, :author, :comments, :response
 
     def initialize(file)
       raise ArgumentError unless file.is_a?(File)
@@ -20,6 +20,8 @@ module Kibela
       @id = regexp[:id].to_i
       @body = markdown.content
       @frontmatter = markdown.front_matter
+      @author = @frontmatter['author'].delete_prefix('@')
+      @comments = @frontmatter['comments'].map { |c| Comment.new(c) }
     end
 
     def blog?
