@@ -25,7 +25,7 @@ module Kibela
     end
 
     def blog?
-      @kind == :blog
+      @kind == :blogs
     end
 
     def wiki?
