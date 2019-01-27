@@ -44,6 +44,10 @@ module Kibela
         @body.gsub!(elem.attributes['src'], attachment_list[match['attachment_name']].esa_path) if match
       end
     end
+
+    def esa_number
+      @response.body['number']
+    end
   end
 
   class Attachment
