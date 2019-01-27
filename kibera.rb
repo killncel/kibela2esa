@@ -32,6 +32,10 @@ module Kibela
       @kind == :wikis
     end
 
+    def wip?
+      %r[wip]i.match?(@name)
+    end
+
     def replace_attachment_names(attachment_list)
       parsed_body = Nokogiri::HTML(@body)
       parsed_body.css('img').map do |elem|
