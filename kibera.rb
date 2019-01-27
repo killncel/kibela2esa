@@ -65,6 +65,30 @@ module Kibela
     end
   end
 
+  class Comment
+    def initialize(comment)
+      @raw = comment
+      @content = @raw['content']
+      @user = @raw['user']
+    end
+
+    def replace_attachment_names(attachment_list)
+      parsed_comment = Nokogiri::HTML(@content)
+      parsed_comment.css('img').map do |elem|
+        match = ATTACHMENT_PATTERN.match(elem.attributes['src'].value)
+        @content.gsub!(elem.attributes['src'], attachment_list[match['attachment_name']].esa_path) if match
+      end
+    end
+
+    def esafy(attachment_list)
+      replace_attachment_names(attachment_list)
+      {
+        body_md: @content,
+        user: @user
+      }
+    end
+  end
+
   class Attachment
     attr_accessor :name, :path, :esa_path
 
