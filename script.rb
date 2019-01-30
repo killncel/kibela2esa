@@ -5,9 +5,6 @@ require 'logger'
 require_relative './kibela'
 
 ESA_TEAM = 'unasuke'
-USER_MAPPING = [
-  { kibela: 'unasuke', esa: 'unasuke' }
-]
 
 class Migrater
   attr_reader :notes, :attachment_list

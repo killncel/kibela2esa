@@ -5,6 +5,9 @@ module Kibela
   TEAM = 'unasuke'
   TITLE_PATTERN = %r[\A.*/kibela-#{TEAM}-\d+/(?<kind>wikis|blogs)/(?<path>[[:print:]]*/)(?<id>\d)+-(?<name>[[:print:]]*)\.md\z]
   ATTACHMENT_PATTERN = %r[^(\.\./)*attachments/(?<attachment_name>\d+\.png)]
+  KIBELA_ESA_USER_MAP = {
+    'unasuke' => 'unasuke'
+  }
 
   class Note
     attr_accessor :name, :category, :body, :frontmatter, :author, :comments, :response
@@ -54,10 +57,15 @@ module Kibela
           body_md: @body,
           tags: [],
           category: @category,
+          user: esafy_user_name(@author),
           wip: wip?,
           message: 'migrate from kibela',
         }
       }
+    end
+
+    def esafy_user_name(kibela_user)
+      KIBELA_ESA_USER_MAP[kibela_user] || 'esa_bot'
     end
 
     def esa_number
