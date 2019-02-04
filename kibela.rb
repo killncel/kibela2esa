@@ -42,8 +42,11 @@ module Kibela
     def replace_attachment_names(attachment_list)
       parsed_body = Nokogiri::HTML(@body)
       parsed_body.css('img').map do |elem|
+        next unless elem.attributes['src']
         match = ATTACHMENT_PATTERN.match(elem.attributes['src'].value)
         # 文中に出現するkibelaの画像URLをesaの画像URLに置換する
+        next unless match
+        next unless attachment_list[match['attachment_name']]
         @body.gsub!(elem.attributes['src'], attachment_list[match['attachment_name']].esa_path) if match
       end
     end
