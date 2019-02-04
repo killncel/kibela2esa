@@ -88,11 +88,15 @@ module Kibela
       end
     end
 
+    def esafy_user_name(kibela_user)
+      KIBELA_ESA_USER_MAP[kibela_user] || 'esa_bot'
+    end
+
     def esafy(attachment_list)
       replace_attachment_names(attachment_list)
       {
         body_md: @content,
-        user: @user
+        user: esafy_user_name(@user)
       }
     end
   end
