@@ -11,6 +11,7 @@ class Migrater
 
   def initialize(kibela: , esa:)
     @logger = Logger.new(STDOUT)
+    @file_logger = Logger.new("log_#{Time.now.to_i}.log")
     @client = Esa::Client.new(access_token: ENV['ESA_ACCESS_TOKEN'], current_team: ESA_TEAM)
   end
 
@@ -42,9 +43,11 @@ class Migrater
     @notes.each do |note|
       request = note.esafy(@attachment_list)
       @logger.info request
+      @file_logger.info request
 
       unless dry_run
         response = @client.create_post(request)
+        @file_logger.info response
         note.response = response
         sleep 0.5
       end
@@ -52,9 +55,11 @@ class Migrater
       note.comments.each do |comment|
         request = comment.esafy(@attachment_list)
         @logger.info request
+        @file_logger.info request
 
         unless dry_run
-          @client.create_comment(note.esa_number, request)
+          response = @client.create_comment(note.esa_number, request)
+          @file_logger.info response
           sleep 0.5
         end
       end
@@ -63,7 +68,11 @@ class Migrater
 
   def upload_attachments
     @attachments.each do |attachment|
+      @logger.info attachment.path
+      @file_logger.info attachment.path
       response = @client.upload_attachment(attachment.path)
+      @logger.info response
+      @file_logger.info response
       attachment.esa_path = response.body['attachment']['url']
       sleep 0.5
     end
