@@ -4,7 +4,7 @@ require 'nokogiri'
 module Kibela
   TEAM = 'unasuke'
   TITLE_PATTERN = %r[\A.*/kibela-#{TEAM}-\d+/(?<kind>wikis|blogs)/(?<path>[[:print:]]*/)*(?<id>\d)+-(?<name>[[:print:]]*)\.md\z]
-  ATTACHMENT_PATTERN = %r[^(\.\./)*attachments/(?<attachment_name>\d+\.png)]
+  ATTACHMENT_PATTERN = %r[^(?~http)(\.\./)*attachments/(?<attachment_name>\d+\.(png|JPG|jpg|jpeg|gif|PNG))]
   KIBELA_ESA_USER_MAP = {
     'unasuke' => 'unasuke'
   }
