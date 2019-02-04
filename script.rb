@@ -4,25 +4,25 @@ require 'esa'
 require 'logger'
 require_relative './kibela'
 
-ESA_TEAM = 'unasuke'
+ESA_TEAM = ENV['ESA_TEAM_NAME']
 
 class Migrater
   attr_reader :notes, :attachment_list
 
-  def initialize(kibela: , esa:)
+  def initialize
     @logger = Logger.new(STDOUT)
     @file_logger = Logger.new("log_#{Time.now.to_i}.log")
     @client = Esa::Client.new(access_token: ENV['ESA_ACCESS_TOKEN'], current_team: ESA_TEAM)
   end
 
   def prepare
-    @notes = Dir.glob("./kibela-unasuke-*/**/*.md").map do |path|
+    @notes = Dir.glob("./kibela-#{ENV['KIBELA_TEAM']}-*/**/*.md").map do |path|
       File.open(path) do |f|
         Kibela::Note.new(f)
       end
     end
 
-    @attachments = Dir.glob("./kibela-unasuke-*/attachments/*").map do |path|
+    @attachments = Dir.glob("./kibela-#{ENV['KIBELA_TEAM']}-*/attachments/*").map do |path|
       File.open(path) do |f|
         Kibela::Attachment.new(f)
       end
@@ -80,6 +80,6 @@ class Migrater
   end
 end
 
-migrater = Migrater.new(kibela: 'unasuke', esa: 'unasuke')
+migrater = Migrater.new
 
 binding.pry

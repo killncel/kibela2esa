@@ -2,7 +2,7 @@ require 'front_matter_parser'
 require 'nokogiri'
 
 module Kibela
-  TEAM = 'unasuke'
+  TEAM = ENV['KIBELA_TEAM']
   TITLE_PATTERN = %r[\A.*/kibela-#{TEAM}-\d+/(?<kind>wikis|blogs)/(?<path>[[:print:]]*/)*(?<id>\d)+-(?<name>[[:print:]]*)\.md\z]
   ATTACHMENT_PATTERN = %r[^(?~http)(\.\./)*attachments/(?<attachment_name>\d+\.(png|JPG|jpg|jpeg|gif|PNG))]
   KIBELA_ESA_USER_MAP = {
