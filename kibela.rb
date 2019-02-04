@@ -18,7 +18,7 @@ module Kibela
       markdown = FrontMatterParser::Parser.new(:md).call(file.read)
 
       @name = regexp[:name]
-      @category = regexp[:path].delete_suffix('/')
+      @category = "from_kibela/#{regexp[:path]}".delete_suffix('/')
       @kind = regexp[:kind].to_sym
       @id = regexp[:id].to_i
       @body = markdown.content
