@@ -109,6 +109,7 @@ module Kibela
 
       @name = File.basename(file.path)
       @path = file.path
+      @esa_path = 'dummy'
     end
   end
 end
