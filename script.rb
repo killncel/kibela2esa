@@ -73,6 +73,7 @@ class Migrater
       response = @client.upload_attachment(attachment.path)
       @logger.info response
       @file_logger.info response
+      next if response.body['error']
       attachment.esa_path = response.body['attachment']['url']
       sleep 0.5
     end
