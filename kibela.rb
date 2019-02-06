@@ -39,6 +39,14 @@ module Kibela
       %r[wip]i.match?(@name)
     end
 
+    def original_url
+      if wiki?
+        "https://#{TEAM}.kibe.la/notes/#{id}"
+      else
+        "https://#{TEAM}.kibe.la/@#{@author}/#{id}"
+      end
+    end
+
     def replace_attachment_names(attachment_list)
       parsed_body = Nokogiri::HTML(@body)
       parsed_body.css('img').map do |elem|
@@ -57,7 +65,7 @@ module Kibela
       {
         post: {
           name: @name,
-          body_md: @body,
+          body_md: @body + "\n\n## original url\n#{original_url}\n",
           tags: [],
           category: @category,
           user: esafy_user_name(@author),
