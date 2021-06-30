@@ -5,12 +5,12 @@ kibelaからexportされたファイル、記事をesaへインポートする�
 
 ## 使いかた
 ### 1. API tokenの取得
-esaに対してwrite権限があるAPI tokenを発行し、環境変数 `ESA_TOKEN` へ格納してください。
+esaに対してwrite権限があるAPI tokenを発行し、環境変数 `ESA_ACCESS_TOKEN` へ格納してください。
 
 ![create token with write scope](https://user-images.githubusercontent.com/4487291/52120119-ae9fcb80-265e-11e9-8557-fe63afa6a08a.png)
 
 ### 2. 環境変数の定義
-`.env.sample` を参考に、 `ESA_TEAM` と `KIBELA_TEAM` を設定してください。
+`.env.sample` を参考に、 `ESA_TEAM_NAME` と `KIBELA_TEAM` を設定してください。
 (dotenvを読むようにはなっていないことに注意してください。)
 
 ### 3. kibela -> esa におけるユーザー名のmappingを行なうHashの定義
